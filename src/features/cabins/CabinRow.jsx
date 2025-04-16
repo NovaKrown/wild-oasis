@@ -1,8 +1,12 @@
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteCabin } from "../../services/apiCabins";
+
 import toast from "react-hot-toast";
+import { useState } from "react";
+import CreateCabinForm from "./CreateCabinForm";
+import { useDeleteCabin } from "./useDeleteCabin";
+import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
+import { useCreateCabin } from "./useCreateCabin";
 
 const TableRow = styled.div`
   display: grid;
@@ -44,35 +48,63 @@ const Discount = styled.div`
 `;
 
 function CabinRow({ cabin }) {
-  const { id: cabinId, name, maxCapacity, regularPrice, discount, image, deletable } = cabin;
+  const [showForm, setShowForm] = useState(false);
+  const { isDeleting, deleteCabin } = useDeleteCabin();
+  const { isCreating, createCabin } = useCreateCabin();
 
-  const queryClient = useQueryClient();
+  const { id: cabinId, name, maxCapacity, regularPrice, discount, image, description, deletable } = cabin;
 
-  const { isPending: isDeleting, mutate } = useMutation({
-    mutationFn: (id) => deleteCabin(id),
-    onSuccess: () => {
-      toast.success("Cabin Deleted!");
-      queryClient.invalidateQueries({
-        queryKey: ["cabins"],
-      });
-    },
-    onError: (err) => toast.error(err.message),
-  });
+  function handleDuplicate() {
+    createCabin({
+      name: `Copy of ${name}`,
+      maxCapacity,
+      regularPrice,
+      discount,
+      image,
+      description,
+    });
+  }
 
   return (
-    <TableRow>
-      <Img src={image} />
-      <Cabin>{name}</Cabin>
-      <Cabin>{maxCapacity} Guests</Cabin>
-      <Price>{formatCurrency(regularPrice)}</Price>
-      <Discount>{formatCurrency(discount)}</Discount>
-      {deletable && (
-        <button onClick={() => mutate(cabinId)} disabled={isDeleting}>
-          Delete
-        </button>
-      )}
-      {!deletable && <button onClick={() => toast.error("C̵̙̟͐͋͋a̴̘̦͍͒͛̽b̸̡̺̼͊̓͒i̵̫̪̘͆͛͆n̸̪̫͙͌̔ c̴̠͕͔̓͊̓o̸͚͉͕̒̓͘ú̵̘̪̽͒l̵̝͎̈́̐͛͜d̵͉͕͙̀̾ n̸̟̻͑́͑ö̴̺̠̝́͘t̵͖͍͓̐̐͝ b̸̺̟̦̿͋̕e̵͍̟̿̀͒͜ d̵͚̙͇̓̾͆e̵͔͉͍͌̀͋l̸̡̫͖͋̐̓e̸̡͕͌̓́͜t̵͇̼̻͋̽͆e̴͕̦̺͒͘̚d̴͎͖͕͊͒̚")}>D̵͔̼͕͛̈́̓é̵̢̻̟̓͠l̸̪͔̝̀͒͑e̸̺͓̐̈́͊͜t̴͓͉͍͋͐͋e̵̢̠̼̿̽͘</button>}
-    </TableRow>
+    <>
+      <TableRow>
+        <Img src={image} />
+        <Cabin>{name}</Cabin>
+        <Cabin>{maxCapacity} Guests</Cabin>
+        <Price>{formatCurrency(regularPrice)}</Price>
+        {discount ? <Discount>{formatCurrency(discount)}</Discount> : <span>&mdash;</span>}
+
+        {deletable && (
+          <div>
+            <button disabled={isCreating} onClick={handleDuplicate}>
+              <HiSquare2Stack />
+            </button>
+            <button onClick={() => setShowForm((show) => !show)}>
+              <HiPencil />
+            </button>
+            <button onClick={() => deleteCabin(cabinId)} disabled={isDeleting}>
+              <HiTrash />
+            </button>
+          </div>
+        )}
+        {!deletable && (
+          <div>
+            <button onClick={() => toast.error("Ỳ̵̝̫͍́͒o̵͇͔̙͒͛͝u̴̡̺͙̾͌͝ h̴͙͎͆͜͝͝a̸̡͚̪̐̿̔v̵͇̞̈́̔̕è̸͇̝͍͛ m̴̪̻̼͛̾͛ä̵̙͚́̾̚͜d̸̦͇̫̒̒̓e̸͕͉͓͋̿͊ a̸̡̝̦̒̐̔ t̵̪̼͍̓̓e̵̡͓͆̐̈́r̴̻̻͉̒̿͌r̴͚͚̝̐́̀i̸͇̠͕͑̓͝b̵̙͕͚̽͒̔ĺ̴͔͉̦́̚e̴͙͇̔̈́͆͜ m̵̢̝͎̐͛͘i̵̠̠̝̚̕s̵͉̪̈́͠t̴̪̞̺̐̈́͘a̴̦͔͙̿̓̔k̵̝̠̟̈́͒e̴̞͓͕͑̓̈́")}>
+              {" "}
+              <HiSquare2Stack />
+            </button>
+            <button onClick={() => toast.error("Ć̵͔͙̠͝á̴̼͉̺͊̕b̸̟͇͐͛͝i̵͕̦͕͊̕n̸͕̺̟̈́͌̈́ c̸̢̼̼̈́͆͋a̸̝̦̘͆̽n̸͖̟͋͆͒n̵̠͇͛̔͝o̸̢͇͍̾̒̿ẗ̵̢̡̪́̽̐ b̴̢̝͎͌̚e̴͙̠͙͌͆ ë̸̞͇́͐͊d̴̞͔̫͊̒̓i̵̞̟̙̐͒̔t̵̢͉͚̐͝͝è̴͙̪̞̓͛d̵͉̪͆̾͆͜")}>
+              {" "}
+              <HiPencil />
+            </button>
+            <button onClick={() => toast.error("C̵̙̟͐͋͋a̴̘̦͍͒͛̽b̸̡̺̼͊̓͒i̵̫̪̘͆͛͆n̸̪̫͙͌̔ c̸̢̼̼̈́͆͋a̸̝̦̘͆̽n̸͖̟͋͆͒n̵̠͇͛̔͝o̸̢͇͍̾̒̿ẗ̵̢̡̪́̽̐ b̸̺̟̦̿͋̕e̵͍̟̿̀͒͜ d̵͚̙͇̓̾͆e̵͔͉͍͌̀͋l̸̡̫͖͋̐̓e̸̡͕͌̓́͜t̵͇̼̻͋̽͆e̴͕̦̺͒͘̚d̴͎͖͕͊͒̚")}>
+              <HiTrash />
+            </button>
+          </div>
+        )}
+      </TableRow>
+      {showForm && <CreateCabinForm cabinToEdit={cabin} />}
+    </>
   );
 }
 

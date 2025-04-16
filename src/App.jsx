@@ -32,7 +32,12 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <GlobalStyles />
-      <BrowserRouter>
+      <BrowserRouter
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}
+      >
         <Routes>
           <Route element={<AppLayout></AppLayout>}>
             <Route index element={<Navigate replace to="dashboard" />} />
@@ -50,9 +55,9 @@ function App() {
       </BrowserRouter>
       <Toaster
         position="top-center"
-        gutter={12}
+        gutter={24}
         containerStyle={{
-          margin: "8px",
+          margin: "124px",
         }}
         toastOptions={{
           success: {
@@ -62,7 +67,7 @@ function App() {
             duration: 5000,
           },
           style: {
-            fontSize: "16px",
+            fontSize: "32px",
             maxWidth: "500px",
             padding: "16px 24px",
             backgroundColor: "var(--color-grey-0)",
