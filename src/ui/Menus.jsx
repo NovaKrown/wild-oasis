@@ -86,7 +86,6 @@ function Toggle({ id }) {
 
   function handleClick(e) {
     e.stopPropagation();
-    console.log(id);
 
     const rect = e.target.closest("button").getBoundingClientRect();
     setPosition({
@@ -95,7 +94,6 @@ function Toggle({ id }) {
     });
 
     openId === "" || openId !== id ? open(id) : close();
-    console.log("click", openId);
   }
 
   return (

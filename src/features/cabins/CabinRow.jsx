@@ -77,10 +77,6 @@ function CabinRow({ cabin }) {
 
       {deletable && (
         <div>
-          {/* <button disabled={isCreating} onClick={handleDuplicate}>
-            <HiSquare2Stack />
-          </button> */}
-
           <Modal>
             <Menus.Menu>
               <Menus.Toggle id={cabinId} />
@@ -109,19 +105,54 @@ function CabinRow({ cabin }) {
         </div>
       )}
       {!deletable && (
-        <div>
-          <button onClick={() => toast.error("Ỳ̵̝̫͍́͒o̵͇͔̙͒͛͝u̴̡̺͙̾͌͝ h̴͙͎͆͜͝͝a̸̡͚̪̐̿̔v̵͇̞̈́̔̕è̸͇̝͍͛ m̴̪̻̼͛̾͛ä̵̙͚́̾̚͜d̸̦͇̫̒̒̓e̸͕͉͓͋̿͊ a̸̡̝̦̒̐̔ t̵̪̼͍̓̓e̵̡͓͆̐̈́r̴̻̻͉̒̿͌r̴͚͚̝̐́̀i̸͇̠͕͑̓͝b̵̙͕͚̽͒̔ĺ̴͔͉̦́̚e̴͙͇̔̈́͆͜ m̵̢̝͎̐͛͘i̵̠̠̝̚̕s̵͉̪̈́͠t̴̪̞̺̐̈́͘a̴̦͔͙̿̓̔k̵̝̠̟̈́͒e̴̞͓͕͑̓̈́")}>
-            {" "}
-            <HiSquare2Stack />
-          </button>
-          <button onClick={() => toast.error("Ć̵͔͙̠͝á̴̼͉̺͊̕b̸̟͇͐͛͝i̵͕̦͕͊̕n̸͕̺̟̈́͌̈́ c̸̢̼̼̈́͆͋a̸̝̦̘͆̽n̸͖̟͋͆͒n̵̠͇͛̔͝o̸̢͇͍̾̒̿ẗ̵̢̡̪́̽̐ b̴̢̝͎͌̚e̴͙̠͙͌͆ ë̸̞͇́͐͊d̴̞͔̫͊̒̓i̵̞̟̙̐͒̔t̵̢͉͚̐͝͝è̴͙̪̞̓͛d̵͉̪͆̾͆͜")}>
-            {" "}
-            <HiPencil />
-          </button>
-          <button onClick={() => toast.error("C̵̙̟͐͋͋a̴̘̦͍͒͛̽b̸̡̺̼͊̓͒i̵̫̪̘͆͛͆n̸̪̫͙͌̔ c̸̢̼̼̈́͆͋a̸̝̦̘͆̽n̸͖̟͋͆͒n̵̠͇͛̔͝o̸̢͇͍̾̒̿ẗ̵̢̡̪́̽̐ b̸̺̟̦̿͋̕e̵͍̟̿̀͒͜ d̵͚̙͇̓̾͆e̵͔͉͍͌̀͋l̸̡̫͖͋̐̓e̸̡͕͌̓́͜t̵͇̼̻͋̽͆e̴͕̦̺͒͘̚d̴͎͖͕͊͒̚")}>
-            <HiTrash />
-          </button>
-        </div>
+        <>
+          <div>
+            <Modal>
+              <Menus.Menu>
+                <Menus.Toggle id={cabinId} />
+
+                <Menus.List id={cabinId}>
+                  <Menus.Button
+                    icon={<HiSquare2Stack />}
+                    onClick={() => toast.error("Ỳ̵̝̫͍́͒o̵͇͔̙͒͛͝u̴̡̺͙̾͌͝ h̴͙͎͆͜͝͝a̸̡͚̪̐̿̔v̵͇̞̈́̔̕è̸͇̝͍͛ m̴̪̻̼͛̾͛ä̵̙͚́̾̚͜d̸̦͇̫̒̒̓e̸͕͉͓͋̿͊ a̸̡̝̦̒̐̔ t̵̪̼͍̓̓e̵̡͓͆̐̈́r̴̻̻͉̒̿͌r̴͚͚̝̐́̀i̸͇̠͕͑̓͝b̵̙͕͚̽͒̔ĺ̴͔͉̦́̚e̴͙͇̔̈́͆͜ m̵̢̝͎̐͛͘i̵̠̠̝̚̕s̵͉̪̈́͠t̴̪̞̺̐̈́͘a̴̦͔͙̿̓̔k̵̝̠̟̈́͒e̴̞͓͕͑̓̈́")}
+                  >
+                    D͇̝u̠͜͜p̦͇͜l͉͔̠i̼̞͙c͎̺a͚̟̻t̢͖͜e̡̪̺
+                  </Menus.Button>
+
+                  <Menus.Button
+                    icon={<HiPencil />}
+                    onClick={() => {
+                      toast.error("Ć̵͔͙̠͝á̴̼͉̺͊̕b̸̟͇͐͛͝i̵͕̦͕͊̕n̸͕̺̟̈́͌̈́ c̸̢̼̼̈́͆͋a̸̝̦̘͆̽n̸͖̟͋͆͒n̵̠͇͛̔͝o̸̢͇͍̾̒̿ẗ̵̢̡̪́̽̐ b̴̢̝͎͌̚e̴͙̠͙͌͆ ë̸̞͇́͐͊d̴̞͔̫͊̒̓i̵̞̟̙̐͒̔t̵̢͉͚̐͝͝è̴͙̪̞̓͛d̵͉̪͆̾͆͜");
+                    }}
+                  >
+                    E̵̟̙̝̿͊͑d̴̢͎̪͐͆̚i̸̢̡̝͑͆t̸̡̟͐͝
+                  </Menus.Button>
+                  <Menus.Button
+                    icon={<HiTrash />}
+                    onClick={() => {
+                      toast.error("C̵̙̟͐͋͋a̴̘̦͍͒͛̽b̸̡̺̼͊̓͒i̵̫̪̘͆͛͆n̸̪̫͙͌̔ c̸̢̼̼̈́͆͋a̸̝̦̘͆̽n̸͖̟͋͆͒n̵̠͇͛̔͝o̸̢͇͍̾̒̿ẗ̵̢̡̪́̽̐ b̸̺̟̦̿͋̕e̵͍̟̿̀͒͜ d̵͚̙͇̓̾͆e̵͔͉͍͌̀͋l̸̡̫͖͋̐̓e̸̡͕͌̓́͜t̵͇̼̻͋̽͆e̴͕̦̺͒͘̚d̴͎͖͕͊͒̚");
+                    }}
+                  >
+                    D͋̀͑e͑͐l̽͋͝e͆̀̔t́͌̚e̽̀̕
+                  </Menus.Button>
+                </Menus.List>
+              </Menus.Menu>
+            </Modal>
+          </div>
+          {/* <div>
+            <button onClick={() => toast.error("Ỳ̵̝̫͍́͒o̵͇͔̙͒͛͝u̴̡̺͙̾͌͝ h̴͙͎͆͜͝͝a̸̡͚̪̐̿̔v̵͇̞̈́̔̕è̸͇̝͍͛ m̴̪̻̼͛̾͛ä̵̙͚́̾̚͜d̸̦͇̫̒̒̓e̸͕͉͓͋̿͊ a̸̡̝̦̒̐̔ t̵̪̼͍̓̓e̵̡͓͆̐̈́r̴̻̻͉̒̿͌r̴͚͚̝̐́̀i̸͇̠͕͑̓͝b̵̙͕͚̽͒̔ĺ̴͔͉̦́̚e̴͙͇̔̈́͆͜ m̵̢̝͎̐͛͘i̵̠̠̝̚̕s̵͉̪̈́͠t̴̪̞̺̐̈́͘a̴̦͔͙̿̓̔k̵̝̠̟̈́͒e̴̞͓͕͑̓̈́")}>
+              {" "}
+              <HiSquare2Stack />
+            </button>
+            <button onClick={() => toast.error("Ć̵͔͙̠͝á̴̼͉̺͊̕b̸̟͇͐͛͝i̵͕̦͕͊̕n̸͕̺̟̈́͌̈́ c̸̢̼̼̈́͆͋a̸̝̦̘͆̽n̸͖̟͋͆͒n̵̠͇͛̔͝o̸̢͇͍̾̒̿ẗ̵̢̡̪́̽̐ b̴̢̝͎͌̚e̴͙̠͙͌͆ ë̸̞͇́͐͊d̴̞͔̫͊̒̓i̵̞̟̙̐͒̔t̵̢͉͚̐͝͝è̴͙̪̞̓͛d̵͉̪͆̾͆͜")}>
+              {" "}
+              <HiPencil />
+            </button>
+            <button onClick={() => toast.error("C̵̙̟͐͋͋a̴̘̦͍͒͛̽b̸̡̺̼͊̓͒i̵̫̪̘͆͛͆n̸̪̫͙͌̔ c̸̢̼̼̈́͆͋a̸̝̦̘͆̽n̸͖̟͋͆͒n̵̠͇͛̔͝o̸̢͇͍̾̒̿ẗ̵̢̡̪́̽̐ b̸̺̟̦̿͋̕e̵͍̟̿̀͒͜ d̵͚̙͇̓̾͆e̵͔͉͍͌̀͋l̸̡̫͖͋̐̓e̸̡͕͌̓́͜t̵͇̼̻͋̽͆e̴͕̦̺͒͘̚d̴͎͖͕͊͒̚")}>
+              <HiTrash />
+            </button>
+          </div> */}
+        </>
       )}
     </Table.Row>
   );
