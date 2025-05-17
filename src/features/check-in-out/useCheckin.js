@@ -11,13 +11,13 @@ export function useCheckin() {
     mutationFn: ({ bookingId, breakfast }) =>
       updateBooking(bookingId, {
         status: "checked-in",
-        isPaid: true,
+        isPaid: "true",
         ...breakfast,
       }),
 
     onSuccess: (data) => {
       toast.success(`Booking #${data.id} successfully checked in`);
-      queryClient.invalidateQueries({ active: true });
+      queryClient.invalidateQueries({ active: "true" });
       navigate("/");
     },
 

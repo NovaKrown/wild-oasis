@@ -1,7 +1,7 @@
 import supabase, { supabaseUrl } from "./supabase";
 
 export async function getCabins() {
-  const { data, error } = await supabase.from("cabins").select("*").order("created_at", { ascending: true });
+  const { data, error } = await supabase.from("cabins").select("*").order("created_at", { ascending: "true" });
 
   if (error) {
     console.error(error);
